@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Self Pay system</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+    <style>
+        #app{
+            border: 10px solid blue;
+            background-color: rgb(229, 169, 246);
+            width: 60%;
+            margin: auto;
+            margin-top: 20px;
+            padding: 10px;
+        }
+        .top{
+            border-bottom: 5px solid blue;
+            text-align: center;
+            padding: 10px;
+        }
+        .top_input_form{
+            font-size: large;
+        }
+        .top button{
+            font-size: large;
+            margin: 10px;
+            margin-left: 15px;
+            margin-right: 15px;
+        }
+        .both{
+            display: flex;
+            font-size: larger;
+        }
+        
+        .right{
+            width: 50%;
+            background-color: rgb(189, 142, 234);
+            overflow: hidden;
+        }
+        table tr th{
+            text-align: left;
+        }
+        .right table{
+            width: 100%;
+        }
+        .right table tr, .left table tr{
+            height: 35px;
+            font-size: larger;
+        }
+        .left{
+            width: 50%;
+            border-right: 5px solid blue;
+            overflow: hidden;
+        }
+        .bottom{
+            border-top: 5px solid blue;
+            font-size: larger;
+            display: flex;
+            overflow: hidden;
+        }
+        .bottom p{
+            margin-right: 70px;
+        }
+        ul {
+            list-style: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="top">
+            <h1>SELF PAY SYSTEM</h1>
+            <form action="" class="top_input_form">
+                <label for="items"> Enter your item name correctly: </label>
+                <input list="goods" name="items" type="text" class="" v-model="items" maxlength="20">
+                <datalist id="goods">
+                    <option value="Sugar 1kg">
+                    <option value="Tea leaves 200g">
+                    <option value="Milkmaid big">
+                    <option value="Dhal 1kg">
+                    <option value="Rice Samba 1kg">
+                    <option value="Dried Chili 100g">
+                </datalist>
+                <br><br>
+                <label for="qty"> Enter the quantity you want: </label>
+                <input name="qty" type="number" class="" v-model="qty">
+            </form>
+            <button @click="add" >Add to list</button>
+            <button  @click="calculate" >Get Total</button>
+        </div>
+        <div class="both">
+            <div class="left">
+                <table class="bill">
+                    <tr>
+                        <th style="width: 70%;">Item</th>
+                        <th style="width: 30%;">Quantity</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <ol>
+                                <li v-for="(items) in item_list">
+                                    {{items}}
+                                </li>
+                            </ol>
+                        </td>
+                        <td >
+                            <ul>
+                                <li v-for="(qty) in qty_list">
+                                    {{qty}}
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="right">
+                <table class="item_list">
+                    <tr>
+                        <th style="width: 40%;">Item</th>
+                        <th style="width: 30%;">Quantity</th>
+                        <th style="width: 30%;">price</th>
+                    </tr>
+                    <tr>
+                        <td>Sugar</td>
+                        <td>1Kg</td>
+                        <td>200.00</td>
+                    </tr>
+                    <tr>
+                        <td>Tea Leaves</t>
+                        <td>200g</td>
+                        <td>300.00</td>
+                    </tr>
+                    <tr>
+                        <td>Milkmaid</td>
+                        <td>1Kg</td>
+                        <td>600.00</td>
+                    </tr>
+                    <tr>
+                        <td>Dhal</td>
+                        <td>1Kg</td>
+                        <td>550.00</td>
+                    </tr>
+                    <tr>
+                        <td>Rice Samba</td>
+                        <td>1Kg</td>
+                        <td>350.00</td>
+                    </tr>
+                    <tr>
+                        <td>Dried Chili</td>
+                        <td>100g</td>
+                        <td>150.00</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="bottom">
+            <p>You Have Selected</p>
+            <p>{{item_list.length}}</p>
+            <p>Items and total price is</p>
+            <p>{{total}}</p>
+        </div>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                    items: '',
+                    qty: 0,
+                    item_list: [],
+                    qty_list: [],
+                    count: 0,
+                    total: 0,
+                    prices:[{"Sugar 1kg" : 200},
+                            {"Tea leaves 200g" : 300},
+                            {"Milkmaid big" : 600},
+                            {"Dhal 1kg" : 550},
+                            {"Rice Samba 1kg" : 350},
+                            {"Dried Chili 100g" : 150}
+                        ]
+                },
+
+            methods:{
+                add() {
+                    this.item_list.push(this.items)
+                    this.items = ''
+                    if(this.qty <= 0){
+                        this.qty_list.push(this.qty = 1)
+                        this.qty = 0
+                    }else {
+                       this.qty_list.push(this.qty) 
+                       this.qty = 0
+                    }
+                },
+                calculate (){
+                    /*
+                    for(this.itemes in this.item_list){
+                        (this.prices[this.item]*this.qty) += this.total
+                    }*/
+                }
+            }
+
+        })
+    </script>
+</body>
+</html>
